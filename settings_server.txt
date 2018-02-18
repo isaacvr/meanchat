@@ -1,0 +1,27 @@
+== No se maneja ningun tipo de autenticacion
+
+== El ID del usuario sera el mismo que el ID de la peticion
+   de conexion con el WebSocketServer
+
+== Las sesiones son completamente dinamicas y la pseudo-autenticacion
+   ocurre totalmente del lado del cliente, de modo que ninguna
+   conversacion sera guardada sino que el usuario se "crea", siempre
+   que se conecta.
+
+== Solamente se van a guardar los datos de los clientes
+   que esten conectados, por cuestiones de identificacion a la hora
+   de realizar el proceso de mensajeria.
+
+== En caso de la desconexion accidental de un usuario, el servidor
+   debe ser capaz de restaurar la sesion.
+
+== Como procedimiento estadistico, se debe guardar:
+   == la cantidad de personas conectadas por hora.
+   == la cantidad de mensajes enviados por hora.
+   == sistemas operativos desde los que se utiliza el sitio
+   == versiones de los sistemas operativos que se conectan (Ej, Android 6.0.1)
+   == navegadores con que se visita el sitio
+
+== Ademas de los datos usuales de cada usuario, el sistema debe
+   guardar un dato adicional que indica si el usuario ha entrado
+   o no como administrador.

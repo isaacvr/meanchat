@@ -1,0 +1,10 @@
+li(id="change-avatar-container", class="chat-room no-input", ng-show="'change-avatar-container' == userSelected")
+  div(id="avatar-preview-container")
+    img(id="avatar-preview", src="{{ loadedImage || DEFAULT_AVATAR }}")
+
+  div(class="btnContainer")
+    span(class="btn blue")
+      input(id="file", type="file", ng-model="fileList", ng-change="imageUploadHandler()")
+      | Change Avatar
+    button(class="btn red", ng-click="goToLastRoom()") Cancel
+    button(class="btn green", ng-click="saveAvatar(loadedImage)") Save

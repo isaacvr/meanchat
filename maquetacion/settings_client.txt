@@ -1,0 +1,46 @@
+== Existen solamente dos tipos de usuarios: usuarios regulares y administradores.
+
+== Los administradores pueden, además de realizar las tareas regulares, tambien
+   pueden:
+   ==> banear una IP
+   ==> enviar una notificacion (broadcast) general
+   ==> ver las estadisticas
+   ==> ver los logs
+
+== Los datos del usuario se guardan en el almacenamiento local del navegador
+   == Usuario       (lowercase trimmed)
+   == Contraseña    (6 <= length, encrypted with sha512)
+   == Avatar        (DataURL)
+   == Color         (hex)
+   == ID            (String)
+
+== Cada paquete de mensaje porta los siguientes datos:
+   == Mensaje
+   == Quien lo envia (+ avatar)
+   == Quien lo recibe
+   == Lista de imagenes a incluir en el cuerpo del mensaje
+
+== Cualquier tipo de informacion visual, por ejemplo, imagenes
+   enviadas de un usuario a otro, deben ser convertidas a datos URL
+   de modo que no sea necesario almacenarlas en el servidor.
+
+== El sitio debe detectar sesiones previamente abiertas y
+   permitir al cliente manejarlas a su conveniencia
+
+== En caso de la desconexion accidental, el sitio debe
+   intentar reconectarse cada 10 segundos y hacer al
+   usuario consciente del proceso.
+
+== Cuando el usuario no este conectado al servidor, todas las
+   entradas de texto, excepto las de autenticacion, deben estar
+   deshabilitadas o deben permanecer ocultas.
+
+== Las salas de chat abiertas estaran ocultas a menos que su ID
+   sea el mismo que el codigo del usuario seleccionado. En caso de
+   desconexion y cambio de ID del usuario desconectado, el sistema
+   debe renombrar la sala de chat correspondiente en cada uno de los
+   usuarios que contenga al mismo.
+
+== A la llegada de un mensaje, como en los dispositivos moviles hay
+   poca informacion visual, el sistema debe alertar al usuario mediante
+   el API de vibracion nativo del navegador u otro medio disponible.

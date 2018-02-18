@@ -1,0 +1,32 @@
+div(id="room-container")
+  ul(class='list')
+    li(ng-repeat="(key, messages) in rooms", class="chat-room", id="{{key}}", ng-show="key == userSelected", onscroll="roomScrollHandler(event)")
+      div(class="scroll-bar-container")
+        div(class="scroll-bar", onmousedown="sbMdHandler(event)")
+      table
+        tr(ng-repeat="msg in messages", class="message-container", type="{{msg.type}}", from="{{msg.from}}", to="{{msg.to}}")
+
+          td(class="avatar-zone", ng-show="msg.type == 'in'")
+            img(class="avatar", src="{{ userlist[ msg.from ].avatar || DEFAULT_AVATAR }}")
+
+          td(class="message-zone")
+            div(class="message", ng-bind="msg.message", ng-style="{'background-color': msg.type == 'in' ? (msg.color || userlist[key].color || DEFAULT_COLOR_IN) : (myColor || DEFAULT_COLOR_OUT), color: msg.fcolor || 'white' }")
+
+          td(class="avatar-zone", ng-show="msg.type == 'out'")
+            img(class="avatar", src="{{ myAvatar || DEFAULT_AVATAR }}")
+            img(class="avatar-mini", src="{{ myAvatar || DEFAULT_AVATAR }}")
+
+        tr(class="message-container", type="in", ng-show="!!userlist[userSelected].writing")
+          td(class="avatar-zone")
+            img(class="avatar", src="{{ userlist[key].avatar || DEFAULT_AVATAR }}")
+
+          td(class="message-zone")
+            div(class="writing")
+              div(class="ball1")
+              div(class="ball2")
+              div(class="ball3")
+
+    include changeAvatarContainer
+    include changeColorContainer
+
+    input(type="text", id="text-input", size="30", placeholder="Type some text...", value="", ng-keydown="handleKeydown($event)", autofocus)

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+    <title> Video Chat With Socket.IO </title>
+    <style type="text/css">
+      
+    </style>
+  </head>
+  <body>
+
+    <img id="frame" width="600" height="480" src="">
+
+  </body>
+  <script type="text/javascript" src="/js/socket.io.min.js"></script>
+  <script type="text/javascript">
+      
+    window.addEventListener('load', main, false);
+
+    function main() {
+
+      var img = document.querySelector('#frame');
+
+      var socket = io.connect('http://' + window.location.hostname);
+
+      socket.on('connect', function() {
+
+        console.log('Connected');
+
+      });
+
+      socket.on('videoChat', function(e) {
+
+        img.src = e;
+
+      });
+
+      socket.on('error', function(e) {
+      
+        console.log('ERROR: ', e);
+      
+      });
+
+      socket.on('disconnect', function() {
+
+        console.log('Socket disconnected.');
+
+      });
+
+    }
+
+  </script>
+
+</html>

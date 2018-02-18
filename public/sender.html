@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+    <title> Video Chat With Socket.IO </title>
+    <style type="text/css">
+    </style>
+  </head>
+  <body>
+
+  	<h1> This is the sender </h1>
+
+  	<video id="video" autoplay style="width: 600px; height: 480px;"></video>
+  	<canvas id="canvas" style="display: none;"></canvas>
+
+  </body>
+  <script type="text/javascript" src="/js/socket.io.min.js"></script>
+  <script type="text/javascript">
+      
+    window.addEventListener('load', main, false);
+
+    function main() {
+
+      var socket = io.connect('http://' + window.location.hostname);
+
+      socket.on('connect', function() {
+
+        console.log('Connected');
+
+        var success = function(stream) {
+
+          video.src = window.URL.createObjectURL(stream);
+
+          var dframe = function dframe(c, cv) {
+
+            c.drawImage(video, 0, 0, cv.width, cv.height);
+
+            socket.emit('videoChat', cv.toDataURL('image/jpeg', 0.2));
+
+            /*window.requestAnimationFrame(() => {
+              dframe(c, v, cv);
+            });//*/
+
+          };
+
+          var ctx = canvas.getContext('2d');
+
+          canvas.width = 600;
+          canvas.height = 480;
+
+          var itv = setInterval(function() {
+            dframe(ctx, canvas);
+          }, 100);//*/
+
+          //dframe(ctx, video, canvas);
+
+        };
+
+        var fail = function(err) {
+          
+          console.log(err);
+
+        };
+
+        navigator.mozGetUserMedia({ video: true }, success, fail);
+        //navigator.getUserMedia({ video: true }, success, fail);
+
+      });
+
+      socket.on('error', function(e) {
+        console.log('ERROR: ', e);
+      })
+
+      socket.on('disconnect', function() {
+
+        console.log('Socket disconnected.');
+
+      });
+
+    }
+
+  </script>
+</html>

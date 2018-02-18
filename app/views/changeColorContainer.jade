@@ -1,0 +1,8 @@
+li(id="change-color-container", class="chat-room no-input", ng-show="'change-color-container' == userSelected")
+
+  h2 Select your color
+
+  button(ng-click="goToLastRoom()", class="btn red") Cancel
+  button(ng-click="saveMyColor(colorSelected)", class="btn green") Save
+  ul(class="list")
+    li(ng-repeat="color in COLORS", ng-class="{selected: color==colorSelected}", ng-click="selectColor(color)", class="color-container", ng-style="{'background-color': color}")

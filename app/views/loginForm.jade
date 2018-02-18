@@ -1,0 +1,23 @@
+div(id="login-form", class="container")
+
+  h4 Welcome to the site!!!
+
+  ul
+    li
+      input(id="username", name="username", type="text", size="30", placeholder="username...", required, value="", autofocus)
+      div(class="btnContainer")
+        a(id="storeUsername", class="waves-effect waves-light btn")
+          | next
+
+    li
+      div(id="avatar-preview-container")
+        img(id="avatar-preview", src="")
+
+      div(class="btnContainer")
+        button(id="back", class="btn red")
+          | back
+        span(class="btn blue")
+          input(id="file", type="file", onchange="imageUploadHandler(event)")
+          | Select avatar
+        button(id="storeAvatar", class="btn green")
+          | Go

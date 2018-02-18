@@ -1,0 +1,9 @@
+div(id="options-container", ng-class="{visible: !!displayOptions}")
+  ul(class="list")
+
+    li(id="my-avatar")
+      img(src="{{ myAvatar || DEFAULT_AVATAR }}")
+
+    li(ng-repeat="option in userOptions", ng-click="option.action()", class="user-option")
+      span(class="icon {{option.icon}}")
+      span(class="optionName", ng-bind="option.name")

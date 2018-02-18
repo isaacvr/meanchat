@@ -1,0 +1,75 @@
+== Los protocolos internos de comunicacion son los siguientes:
+   == 'USER_DATA'
+      - user                             (String, length == [6, 20])
+      - password                         (String, length >= 6, SHA512)
+      - avatar                           (Image URL)
+      - color                            (hex)
+      - id                               (String, base64)
+
+   == 'MESSAGE'
+      - message                          (String)
+      - from                             (ID)
+      - to                               (ID)
+      - avatar                           (Image URL)
+      - msgId                            (ID*)
+
+   == 'WRITING'
+      - id                               (ID)
+
+   == 'STOP_WRITING'
+      - id                               (ID)
+
+   == 'LOGIN_AS_ADMIN'
+      - password                         (String*)
+
+   == 'BAN_IP'                **
+      - ip                               (String)
+
+   == 'BROADCAST'             **
+      - message                          (String)
+
+   == 'RESTORE_SESSION'
+      - lastId                           (ID)
+      - newId                            (ID)
+
+   == 'UPDATE_ID'
+      - lastId                           (ID)
+      - newId                            (ID)
+
+   == 'LOGOUT'
+
+
+
+
+USER_DATA
+   Almacena en el servidor, la configuracion de un usuario
+   determinado. Se utiliza para mostrar la informacion de
+   acuerdo a las caracteristicas preferenciales del usuario.
+
+MESSAGE
+   Mensaje privado entre dos de los usuarios.
+
+LOGIN_AS_ADMIN
+   Permite al usuario loggearse como administrador del sitio.
+
+BAN_IP
+   Impide la conexion al sitio proveniente de determinada
+   direccion IP. Solo lo puede emitir un administrador.
+
+BROADCAST
+   Envia un mensaje a todos los usuarios conectados al sitio
+   como nota informativa. Debe entrar por todos los canales
+   o salas de comunicacion. Solamente lo puede emitir un
+   administrador del sitio.
+
+RESTORE_SESSION
+   Permite restaurar una sesion previa.
+
+UPDATE_ID
+   Actualiza la identificacion de un usuario.
+
+LOGOUT
+   El usuario sale del sitio.
+
+Los protocolos que tienen dos asteriscos al lado, son utilizables
+solamente por un usuario que esta logueado como administrador.

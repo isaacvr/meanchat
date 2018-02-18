@@ -1,0 +1,5 @@
+div(id="userlist", ng-class="{visible: !!displayUserlist}")
+  ul(class="list")
+    li(ng-repeat="(key, user) in userlist", ng-show="user.state === 'active'", class="user-element {{user.class}}", state="{{user.state}}", user-id="{{user.id}}", ng-click="selectUser(key)")
+      img(class="avatar", src="{{user.avatar}}")
+      span(class="username", ng-bind="user.username")

@@ -1,0 +1,9 @@
+== El servidor va a estar implementado en NodeJS
+   == Los modulos a utilizar son los siguientes
+      - express
+      - socket.io
+      - glob
+      - websockets
+      - statistics   (custom)
+
+== La maqueta del proyecto sera generada por Yeoman

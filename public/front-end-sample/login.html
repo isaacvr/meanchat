@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <title> Login </title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  </head>
+
+  <body ng-app="isaacs-chat" ng-controller="mainController">
+
+    <div class="header-container">
+      <h1 class="banner" ng-bind="banner"></h1>
+      <!-- Los iconos 'more-left' y 'more-right' solo estan presentes
+           en la pagina de mensajes -->
+      <span class="icon icon-more" id="more-left"></span>
+      <span class="icon icon-more" id="more-right"></span>
+    </div>
+
+    <div id="login-form" class="container">
+      <h2> Welcome to the site!!! </h2>
+      <input id="username" type="text" size="30" placeholder="username..." value="isaacvr" ng-model="username" required autofocus>
+      <button ng-click="submit()" class="btn blue"> start </button>
+    </div>
+
+  </body>
+
+  <script type="text/javascript" src="./../js/angularjs-1.4.8.js"></script>
+  <script type="text/javascript" src="./../js/socket.io.js"></script>
+  <script type="text/javascript" src="./../js/ng-socket-io.js"></script>
+  <script type="text/javascript" src="./../js/mainScript.js"></script>
+
+</html>

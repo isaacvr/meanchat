@@ -1,0 +1,79 @@
+script(type="text/javascript")
+  window.addEventListener('load', main, false);
+
+  function main() {
+
+    var inp = document.getElementById('text-input');
+
+    if (!!inp) {
+
+      inp.addEventListener('keydown', function(e) {
+
+        /// console.log(e);
+
+        if ([10, 13].indexOf(e.keyCode) != -1) {
+
+          var tab = document.createElement('table');
+
+          tab.className = 'message-container';
+          tab.setAttribute('type', 'out');
+          tab.setAttribute('from', 'aXNhYWM=');
+          tab.setAttribute('to', 'c2FyYXk=');
+          tab.innerHTML = '<tr><td class="message-zone"><div class="message">' + e.target.value + '</div></td><td class="avatar-zone"><img class="avatar" src="./../img/a.png"><img class="avatar-mini" src="./../img/a.png"></td></tr>';
+
+          room = document.getElementById('public-room');
+
+          room.appendChild(tab);
+
+          room.scrollTop = room.scrollHeight;
+
+          e.target.value = "";
+          e.target.focus();
+
+        }
+
+      }, false);
+
+    }
+
+    var rooms = document.getElementsByClassName('chat-room');
+
+    rooms = rooms || [];
+
+    var i;
+
+    for (i = 0; i < rooms.length; i += 1) {
+
+      rooms[i].addEventListener('scroll', function(e) {
+
+        var sbc, sb;
+        var elem = e.target;
+
+        sbc = elem.getElementsByClassName('scroll-bar-container');
+
+        if (!!sbc && sbc.length > 0) {
+
+          sbc = sbc[0];
+
+          sb = sbc.getElementsByClassName('scroll-bar');
+
+          if (!!sb) {
+
+            sb = sb[0];
+
+            var rat = elem.clientHeight / elem.scrollHeight;
+            var stm = elem.scrollHeight - elem.clientHeight;
+            var stm1 = sbc.clientHeight * (1 - rat);
+
+            sb.style['height'] = (sbc.clientHeight * rat) + 'px';
+            sb.style['top'] = (stm1 * elem.scrollTop / stm) + 'px';
+
+          }
+
+        }
+
+      }, false);
+
+    }
+
+  }

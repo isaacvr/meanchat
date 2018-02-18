@@ -1,0 +1,85 @@
+== Los protocolos internos de comunicacion son los siguientes:
+   == 'USER_DATA'
+      - user                             (String, length == [6, 20])
+      + password                         (String, length >= 6, SHA512)
+      - avatar                           (Image URL)
+      - color                            (hex)
+      - id                               (String)
+
+   == 'MY_ID'
+      - id                               (String)
+
+   == 'MESSAGE'
+      - message                          (String)
+      - from                             (ID)
+      - to                               (ID)
+      - avatar                           (Image URL)
+      - msgId                            (ID*)
+      - [color]                          (hex)
+
+   == 'WRITING'
+      - id                               (ID)
+
+   == 'STOP_WRITING'
+      - id                               (ID)
+
+   == 'LOGIN_AS_ADMIN'
+      - username                         (String*)
+      - password                         (String*)
+
+   == 'BAN_USER'                **
+      - id                               (String)
+
+   == 'BROADCAST'               **
+      - message                          (String)
+
+   == 'RESTORE_SESSION'
+      - lastId                           (ID)
+      - newId                            (ID)
+
+   == 'UPDATE_ID'
+      - lastId                           (ID)
+      - newId                            (ID)
+
+   == 'LOGOUT'
+
+
+
+
+USER_DATA
+   Almacena en el servidor, la configuracion de un usuario
+   determinado. Se utiliza para mostrar la informacion de
+   acuerdo a las caracteristicas preferenciales del usuario.
+   Si el evento se produce desde el servidor, va a ser en
+   forma de arreglo con los datos de cada usuario conectado.
+   Posee caracter destructivo, o sea, si ya existe ese usuario
+   la informacion que existe sera reemplazada por la nueva.
+
+MY_ID
+   Contiene la identificacion del socket correspondiente.
+
+MESSAGE
+   Mensaje privado entre dos de los usuarios.
+
+LOGIN_AS_ADMIN
+   Permite al usuario loggearse como administrador del sitio.
+
+BAN_USER  **
+   Cierra la conexion de cierto usuario.
+
+BROADCAST **
+   Envia un mensaje a todos los usuarios conectados al sitio
+   como nota informativa. Debe entrar por todos los canales
+   o salas de comunicacion.
+
+RESTORE_SESSION
+   Permite restaurar una sesion previa.
+
+UPDATE_ID
+   Actualiza la identificacion de un usuario.
+
+LOGOUT
+   El usuario sale del sitio.
+
+Los protocolos que tienen dos asteriscos al lado, son utilizables
+solamente por un usuario que esta logueado como administrador.

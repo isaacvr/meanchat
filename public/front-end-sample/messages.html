@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+    <title> Messages </title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  </head>
+  <body ng-app="isaacs-chat" ng-controller="mainController" ng-click="clickHandler($event)">
+
+    <div class="header-container">
+      <h1 class="banner" ng-bind="banner"></h1>
+      <!-- Los iconos 'more-left' y 'more-right' solo estan presentes
+           en la pagina de mensajes -->
+      <span class="icon icon-more" id="more-left"></span>
+      <span class="icon icon-more" id="more-right"></span>
+    </div>
+
+    <div id="userlist" ng-class="{visible: !!displayUserlist}">
+      <ul class="list">
+        <li ng-repeat="(key, user) in userlist" class="user-element {{user.class}}" state="{{user.state}}" user-code="{{user.usercode}}" ng-click="selectUser(key)">
+          <img class="avatar" src="{{user.avatar}}">
+          <span class="username" ng-bind="user.username"></span>
+          <span class="unreaded" ng-show="!!rooms[key].unreaded" ng-bind="rooms[key].unreaded"></span>
+        </li>
+      </ul>
+    </div>
+
+    <div id="room-container">
+      <ul class='list'>
+        <li ng-repeat="(key, data) in rooms" class="chat-room" id="{{key}}" ng-show="key == userSelected" onscroll="roomScrollHandler(event)">
+          <div class="scroll-bar-container">
+            <div class="scroll-bar" onmousedown="sbMdHandler(event)"></div>
+          </div>
+          <table>
+            <tr ng-repeat="msg in data.messages" class="message-container" type="{{msg.type}}" from="{{msg.from}}" to="{{msg.to}}">
+              <td class="avatar-zone" ng-show="msg.type == 'in'">
+                <img class="avatar" src="{{ userlist[msg.from].avatar || DEFAULT_AVATAR }}">
+              </td>
+              <td class="message-zone">
+                <div class="message" ng-bind="msg.message" ng-style="{'background-color': msg.type == 'in' ? DEFAULT_COLOR_IN : (myColor || DEFAULT_COLOR_OUT) }">
+                </div>
+              </td>
+              <td class="avatar-zone" ng-show="msg.type == 'out'">
+                <img class="avatar" src="{{ myAvatar || DEFAULT_AVATAR }}">
+                <img class="avatar-mini" src="{{ myAvatar || DEFAULT_AVATAR }}">
+              </td>
+            </tr>
+            <tr class="message-container" type="in" ng-show="!!userlist[userSelected].writing">
+              <td class="avatar-zone">
+                <img class="avatar" src="{{ userlist[key].avatar || DEFAULT_AVATAR }}">
+              </td>
+              <td class="message-zone">
+                <div class="writing">
+                  <div class="ball1"></div>
+                  <div class="ball2"></div>
+                  <div class="ball3"></div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </li>
+        <li id="change-avatar-container" class="chat-room no-input" ng-show="'change-avatar-container' == userSelected">
+          <div id="avatar-preview-container">
+            <img id="avatar-preview" src="{{ loadedImage || DEFAULT_AVATAR }}">
+          </div>
+          <div class="btnContainer">
+            <span class="btn blue"> <input id="file" type="file" ng-model="fileList" ng-change="imageUploadHandler()"> Change Avatar </span>
+            <button class="btn red" ng-click="goToLastRoom()"> Cancel </button>
+            <button class="btn green" ng-click="saveAvatar(loadedImage)"> Save </button>
+          </div>
+        </li>
+        <li id="change-color-container" class="chat-room no-input" ng-show="'change-color-container' == userSelected">
+          <h2> Select your color </h2>
+          <button ng-click="goToLastRoom()" class="btn red"> Cancel </button>
+          <button ng-click="saveMyColor(colorSelected)" class="btn green"> Save </button>
+          <ul class="list">
+            <li ng-repeat="color in COLORS" ng-class="{selected: color==colorSelected}" ng-click="selectColor(color)" class="color-container" ng-style="{'background-color': color}"></li>
+          </ul>
+        </li>
+        <input type="text" id="text-input" size="30" placeholder="Type some text..." value="Hello World!!" ng-keydown="handleKeydown($event)" autofocus>
+      </ul>
+    </div>
+
+    <div id="options-container" ng-class="{visible: !!displayOptions}">
+      <ul class="list">
+        <li id="my-avatar">
+          <img src="{{ myAvatar || DEFAULT_AVATAR }}">
+        </li>
+        <li ng-repeat="option in userOptions" ng-click="option.action()" class="user-option">
+          <span class="icon {{option.icon}}"></span>
+          <span class="optionName" ng-bind="option.name"></span>
+        </li>
+      </ul>
+    </div>
+  </body>
+
+  <script type="text/javascript" src="./../js/angularjs-1.4.8.js"></script>
+  <script type="text/javascript" src="./../js/socket.io.js"></script>
+  <script type="text/javascript" src="./../js/ng-socket-io.js"></script>
+  <script type="text/javascript" src="./mainScript.js"></script>
+
+</html>
